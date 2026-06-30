@@ -199,39 +199,37 @@ function restartGame() {
         });
 
         // ========== 画布点击核心逻辑（关键：结局按钮点击跳转写这里） ==========
-        canvas.addEventListener('click', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
+     canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
 
-            // 开局界面
-            if (isStartScreen && startBtn.hover) {
-                isStartScreen = false;
-                topBarWrap.classList.add("show");
-                bgmAudio.play().catch(()=>{});
-                return;
+    // 开局界面
+    if (isStartScreen && startBtn.hover) {
+        isStartScreen = false;
+        topBarWrap.classList.add("show");
+        bgmAudio.play().catch(()=>{});
+        return;
+    }
+
+    // 游戏结束弹窗按钮点击检测
+    if(gameOver && endBtnRect){
+        const {x, y, w, h} = endBtnRect;
+        if(clickX >= x && clickX <= x + w && clickY >= y && clickY <= y + h){
+            if(isWin && isSecretEnd){
+                // 完美结局跳转
+                window.open(linkConfig.secret, "_blank");
+            }else if(isWin){
+                // 普通胜利跳转你要的新链接
+                window.open(linkConfig.normalWin, "_blank");
+            }else{
+                // 失败直接重启，不跳转
+                restartGame();
             }
-
-            // 游戏结束弹窗按钮点击检测
-            if(gameOver && endBtnRect){
-                const {x, y, w, h} = endBtnRect;
-                // 判断点击落在按钮区域内
-                if(clickX >= x && clickX <= x + w && clickY >= y && clickY <= y + h){
-                    let targetUrl;
-                    if(isWin && isSecretEnd){
-                        targetUrl = linkConfig.secret;
-                    }else if(isWin){
-                        targetUrl = linkConfig.normalWin;
-                    }else{    restartGame();
-                        }
-
-
-                    }
-                    window.open(targetUrl, "_blank");
-                    return;
-                }
-            }
-        });
+            return;
+        }
+    }
+});
 
         // ========== 闪电工具函数 ==========
         function createLightningPath(startX, startY, endX, endY) {
