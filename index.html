@@ -501,7 +501,7 @@ if(isWin && isSecretEnd){
     btnText = "继续";
     ctx.fillText('游戏胜利', canvas.width/2, canvas.height/2 - 65);
     ctx.font = '24px sans-serif';
-    ctx.fillText(`本次得分：${score}, canvas.width/2, canvas.height/2 - 10);
+    ctx.fillText(`本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
 }else{
     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
     gradBtn.addColorStop(0, "#f87171");
