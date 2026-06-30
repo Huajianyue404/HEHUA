@@ -115,7 +115,7 @@ function restartGame() {
     enemies.push(createEnemy());
 }
         
-        // 结局弹窗按钮区域缓存（点击判断用）
+        // 结局弹窗按钮区域缓存
         let endBtnRect = null;
         // 三种结局对应链接
         const linkConfig = {
@@ -123,7 +123,7 @@ function restartGame() {
             normalWin: "https://4409040.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdZM9D#/"
         };
 
-        // 【新增开局界面变量】
+        
         let isStartScreen = true;
         let lightningTimer = 0;
         const lightningInterval = 300;
@@ -137,7 +137,7 @@ function restartGame() {
             hover: false
         };
         const coverImg = new Image();
-        // 封面图在根目录，无需img前缀
+        
         coverImg.src = "秦始皇丢垃圾.jpg";
 
         // 画布自适应窗口
@@ -162,7 +162,6 @@ function restartGame() {
         let hugeTrashTimer = 0;
         const hugeTrashInterval = 900;
 
-        // ========== 预加载全部图片（全部根目录路径，已修正） ==========
         const imgList = {
             player: new Image(),
             enemy1: new Image(),
@@ -198,7 +197,7 @@ function restartGame() {
             player.x = Math.max(0, Math.min(canvas.width - player.w, mouseX - player.w / 2));
         });
 
-        // ========== 画布点击核心逻辑（关键：结局按钮点击跳转写这里） ==========
+   
      canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -220,10 +219,10 @@ function restartGame() {
                 // 完美结局跳转
                 window.open(linkConfig.secret, "_blank");
             }else if(isWin){
-                // 普通胜利跳转你要的新链接
+             
                 window.open(linkConfig.normalWin, "_blank");
             }else{
-                // 失败直接重启，不跳转
+            
                 restartGame();
             }
             return;
@@ -231,7 +230,7 @@ function restartGame() {
     }
 });
 
-        // ========== 闪电工具函数 ==========
+   
         function createLightningPath(startX, startY, endX, endY) {
             const points = [{x: startX, y: startY}];
             let currentX = startX;
@@ -460,7 +459,7 @@ function restartGame() {
                 updateDrawParticles();
             }
 
-            // 游戏结束弹窗绘制（纯画布绘制按钮，不再生成DOM）
+            // 游戏结束弹窗绘制
             if(gameOver){
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -478,7 +477,7 @@ function restartGame() {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
-                // 按钮画布坐标（缓存给点击检测使用）
+                // 按钮画布坐标
                 const btnW = 340;
                 const btnH = 76;
                 const btnX = boxX + (boxW - btnW) / 2;
@@ -494,7 +493,7 @@ function restartGame() {
                     btnText = "继续";
                     ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, canvas.height/2 - 65);
                     ctx.font = '24px sans-serif';
-                    ctx.fillText(`全程满血无伤，本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
+                    ctx.fillText(`本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
                 }else if(isWin){
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
                     gradBtn.addColorStop(0, "#34d399");
@@ -502,7 +501,7 @@ function restartGame() {
                     btnText = "继续";
                     ctx.fillText('游戏胜利', canvas.width/2, canvas.height/2 - 65);
                     ctx.font = '24px sans-serif';
-                    ctx.fillText(`总得分：${score}，曾掉落血量`, canvas.width/2, canvas.height/2 - 10);
+                    ctx.fillText(`本次得分：${score}, canvas.width/2, canvas.height/2 - 10);
                 }else{
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
                     gradBtn.addColorStop(0, "#f87171");
