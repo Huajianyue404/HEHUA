@@ -477,16 +477,16 @@ function restartGame() {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
-                // 按钮画布坐标
-                const btnW = 340;
-                const btnH = 76;
-                const btnX = boxX + (boxW - btnW) / 2;
-                const btnY = boxY + 160;
-                endBtnRect = {x: btnX, y: btnY, w: btnW, h: btnH};
+              // 按钮画布坐标
+const btnW = 340;
+const btnH = 76;
+const btnX = boxX + (boxW - btnW) / 2;
+const btnY = boxY + 160;
+endBtnRect = {x: btnX, y: btnY, w: btnW, h: btnH};
 
-                let gradBtn;
-                let btnText;
-                if(isWin && isSecretEnd){
+let gradBtn;
+let btnText;
+if(isWin && isSecretEnd){
     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
     gradBtn.addColorStop(0, "#ffdd22");
     gradBtn.addColorStop(1, "#ff6600");
@@ -511,20 +511,16 @@ function restartGame() {
     ctx.font = '24px sans-serif';
     ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, canvas.height/2 - 10);
 }
-           
 
-                // 绘制画布按钮
-                ctx.fillStyle = gradBtn;
-                ctx.beginPath();
-                ctx.roundRect(btnX, btnY, btnW, btnH, 16);
-                ctx.fill();
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 24px sans-serif";
-                ctx.fillText(btnText, btnX + btnW/2, btnY + btnH/2);
-            }else{
-                endBtnRect = null;
-            }
-        }
+// 绘制画布按钮
+ctx.fillStyle = gradBtn;
+ctx.beginPath();
+ctx.roundRect(btnX, btnY, btnW, btnH, 16);
+ctx.fill();
+ctx.fillStyle = "#fff";
+ctx.font = "bold 24px sans-serif";
+ctx.fillText(btnText, btnX + btnW/2, btnY + btnH/2);
+
 
         function updateGame() {
             if (gameOver) return;
