@@ -487,29 +487,30 @@ function restartGame() {
                 let gradBtn;
                 let btnText;
                 if(isWin && isSecretEnd){
-                    gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
-                    gradBtn.addColorStop(0, "#ffdd22");
-                    gradBtn.addColorStop(1, "#ff6600");
-                    btnText = "继续";
-                    ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, canvas.height/2 - 65);
-                    ctx.font = '24px sans-serif';
-                    ctx.fillText(`本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
-                }else if(isWin){
-                    gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
-                    gradBtn.addColorStop(0, "#34d399");
-                    gradBtn.addColorStop(1, "#059669");
-                    btnText = "继续";
-                    ctx.fillText('游戏胜利', canvas.width/2, canvas.height/2 - 65);
-                    ctx.font = '24px sans-serif';
-                    ctx.fillText(`本次得分：${score}, canvas.width/2, canvas.height/2 - 10);
-                }else{
-                    gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
-                    gradBtn.addColorStop(0, "#f87171");
-                    gradBtn.addColorStop(1, "#dc2626");
-                    btnText = "重新挑战";
-                    ctx.fillText('游戏失败', canvas.width/2, canvas.height/2 - 65);
-                    ctx.font = '24px sans-serif';
-                    ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, canvas.height/2 - 10);
+    gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
+    gradBtn.addColorStop(0, "#ffdd22");
+    gradBtn.addColorStop(1, "#ff6600");
+    btnText = "继续";
+    ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, canvas.height/2 - 65);
+    ctx.font = '24px sans-serif';
+    ctx.fillText(`本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
+}else if(isWin){
+    gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
+    gradBtn.addColorStop(0, "#34d399");
+    gradBtn.addColorStop(1, "#059669");
+    btnText = "继续";
+    ctx.fillText('游戏胜利', canvas.width/2, canvas.height/2 - 65);
+    ctx.font = '24px sans-serif';
+    ctx.fillText(`本次得分：${score}，曾掉落血量`, canvas.width/2, canvas.height/2 - 10);
+}else{
+    gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
+    gradBtn.addColorStop(0, "#f87171");
+    gradBtn.addColorStop(1, "#dc2626");
+    btnText = "重新挑战";
+    ctx.fillText('游戏失败', canvas.width/2, canvas.height/2 - 65);
+    ctx.font = '24px sans-serif';
+    ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, canvas.height/2 - 10);
+}
                 }
 
                 // 绘制画布按钮
