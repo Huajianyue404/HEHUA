@@ -95,13 +95,32 @@
         let enemyAnimFrame = 0;
         const rayColorList = ["#ffdd00", "#ff5522", "#dd22ff", "#22eeff", "#22ff66"];
 
+// 重启游戏函数
+function restartGame() {
+    score = 0;
+    hp = 3;
+    gameOver = false;
+    isWin = false;
+    isSecretEnd = false;
+    rayDraw = false;
+    secretFreezeTime = 0;
+    rayLineScale = 0;
+    rayParticles = [];
+    trashes = [];
+    hugeTrashTimer = 0;
+    laserPlayed = false;
+    scoreText.innerText = score;
+    // 重置敌人
+    enemies = [];
+    enemies.push(createEnemy());
+}
+        
         // 结局弹窗按钮区域缓存（点击判断用）
         let endBtnRect = null;
         // 三种结局对应链接
         const linkConfig = {
             secret: "https://fteimtih.tipian03.cn/zowb511dn/p5KL?key=t1_7J6GEu&t=1782714457",
-            normalWin: "https://xxx.xxx.com/win",
-            lose: "https://xxx.xxx.com/lose"
+            normalWin: "https://4409040.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdZM9D#/"
         };
 
         // 【新增开局界面变量】
@@ -203,10 +222,11 @@
                         targetUrl = linkConfig.secret;
                     }else if(isWin){
                         targetUrl = linkConfig.normalWin;
-                    }else{
-                        targetUrl = linkConfig.lose;
+                    }else{    restartGame();
+                        }
+
+
                     }
-                    // 同步直接打开，无DOM干扰
                     window.open(targetUrl, "_blank");
                     return;
                 }
