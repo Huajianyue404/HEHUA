@@ -137,6 +137,9 @@ function restartGame() {
             hover: false
         };
         const coverImg = new Image();
+        // 新增普通结局互殴图片
+        const fightImg = new Image();
+        fightImg.src = "两人互殴.png";
         
         coverImg.src = "秦始皇丢垃圾.jpg";
 
@@ -436,6 +439,27 @@ function restartGame() {
             ctx.strokeStyle="#ffdd00"; ctx.lineWidth=6 * rayLineScale; ctx.beginPath(); ctx.moveTo(playerCX, playerCY); ctx.lineTo(enemyCX, enemyCY); ctx.stroke();
         }
 
+        // 文字自动换行工具函数
+        function drawWrapText(text, x, y, maxW, lineH) {
+            ctx.textAlign = "left";
+            const words = text.split("");
+            let line = "";
+            let drawY = y;
+            for (let i = 0; i < words.length; i++) {
+                const testLine = line + words[i];
+                const w = ctx.measureText(testLine).width;
+                if (w > maxW && line !== "") {
+                    ctx.fillText(line, x, drawY);
+                    line = words[i];
+                    drawY += lineH;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, drawY);
+            return drawY + lineH;
+        }
+
         // 游戏主画面渲染
         function renderGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -463,8 +487,8 @@ function restartGame() {
             if(gameOver){
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(0,0,canvas.width,canvas.height);
-                const boxW = 420;
-                const boxH = 260;
+                const boxW = 620;
+                const boxH = 360;
                 const boxX = canvas.width/2 - boxW/2;
                 const boxY = canvas.height/2 - boxH/2;
                 ctx.fillStyle = '#ffffff';
@@ -473,44 +497,82 @@ function restartGame() {
                 ctx.lineWidth = 3;
                 ctx.strokeRect(boxX, boxY, boxW, boxH);
                 ctx.fillStyle = '#222';
-                ctx.font = 'bold 42px sans-serif';
+                ctx.font = 'bold 32px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
+                ctx.textBaseline = "top";
 
                 // 按钮画布坐标
                 const btnW = 340;
-                const btnH = 76;
+                const btnH = 70;
                 const btnX = boxX + (boxW - btnW) / 2;
-                const btnY = boxY + 160;
+                const btnY = boxY + boxH - 90;
                 endBtnRect = {x: btnX, y: btnY, w: btnW, h: btnH};
 
                 let gradBtn;
                 let btnText;
+
                 if(isWin && isSecretEnd){
+                    // ===== 隐藏完美结局 =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
                     gradBtn.addColorStop(0, "#ffdd22");
                     gradBtn.addColorStop(1, "#ff6600");
                     btnText = "继续";
-                    ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, canvas.height/2 - 65);
+                    ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, boxY + 20);
+                    
+                    // 新增圣光劝导剧情文字
+                    ctx.font = '18px sans-serif';
+                    ctx.textAlign = "left";
+                    ctx.fillStyle = "#222";
+                    const secretText = "躲开冲动的拳头实在是太容易了。在防卫的同时，你还不断劝告着这个年轻人不应该乱丢垃圾。不知道过了多久，又或是哪句话触动了他，他终于愿意停下来听你说话...";
+                    drawWrapText(secretText, boxX + 30, boxY + 70, boxW - 60, 26);
+
                     ctx.font = '24px sans-serif';
-                    ctx.fillText(`本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
+                    ctx.textAlign = "center";
+                    ctx.fillText(`本次得分：${score}`, canvas.width/2, boxY + 200);
                 }else if(isWin){
+                    // ===== 普通胜利结局（新增互殴图片+剧情文字） =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
                     gradBtn.addColorStop(0, "#34d399");
                     gradBtn.addColorStop(1, "#059669");
                     btnText = "继续";
-                    ctx.fillText('游戏胜利', canvas.width/2, canvas.height/2 - 65);
+                    ctx.fillText('游戏胜利', canvas.width/2, boxY + 20);
+
+                    // 左侧绘制互殴图片
+                    const imgW = 260;
+                    const imgH = 180;
+                    const imgX = boxX + 20;
+                    const imgY = boxY + 70;
+                    if(fightImg.complete){
+                        ctx.drawImage(fightImg, imgX, imgY, imgW, imgH);
+                    }else{
+                        // 图片未加载占位
+                        ctx.fillStyle="#888";
+                        ctx.fillRect(imgX, imgY, imgW, imgH);
+                        ctx.fillStyle="#fff";
+                        ctx.font="16px sans-serif";
+                        ctx.textAlign="center";
+                        ctx.fillText("两人互殴.png", imgX + imgW/2, imgY + imgH/2);
+                    }
+
+                    // 右侧剧情文字，自动换行
+                    ctx.font = '17px sans-serif';
+                    ctx.textAlign = "left";
+                    ctx.fillStyle = "#222";
+                    const fightText = "你们打得难解难分，不相上下，拳头相撞的闷响成功吸引了一大片的路人...以及警察。";
+                    drawWrapText(fightText, imgX + imgW + 20, imgY + 10, boxW - imgW - 60, 24);
+
                     ctx.font = '24px sans-serif';
-                    // 【修改点】删除了 ",曾掉落血量"
-                    ctx.fillText(`本次得分：${score}`, canvas.width/2, canvas.height/2 - 10);
+                    ctx.textAlign = "center";
+                    ctx.fillText(`本次得分：${score}`, canvas.width/2, boxY + 260);
                 }else{
+                    // ===== 失败结局 =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
                     gradBtn.addColorStop(0, "#f87171");
                     gradBtn.addColorStop(1, "#dc2626");
                     btnText = "重新挑战";
-                    ctx.fillText('游戏失败', canvas.width/2, canvas.height/2 - 65);
+                    ctx.fillText('游戏失败', canvas.width/2, boxY + 30);
                     ctx.font = '24px sans-serif';
-                    ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, canvas.height/2 - 10);
+                    ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, boxY + 120);
                 }
 
                 // 绘制画布按钮
@@ -520,12 +582,12 @@ function restartGame() {
                 ctx.fill();
                 ctx.fillStyle = "#fff";
                 ctx.font = "bold 24px sans-serif";
-                ctx.fillText(btnText, btnX + btnW/2, btnY + btnH/2);
-            } // 【核心修复1】补上gameOver判断块缺失的闭合大括号
-            else{
+                ctx.textAlign = "center";
+                ctx.fillText(btnText, btnX + btnW/2, btnY + btnH/2 + 8);
+            }else{
                 endBtnRect = null;
             }
-        } // 【核心修复2】补上renderGame函数缺失的闭合大括号
+        }
 
         function updateGame() {
             if (gameOver) return;
