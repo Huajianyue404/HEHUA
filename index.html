@@ -501,11 +501,11 @@ function restartGame() {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = "top";
 
-                // 按钮画布坐标
+                // 按钮画布坐标，上移消除删除得分后的空白
                 const btnW = 340;
                 const btnH = 70;
                 const btnX = boxX + (boxW - btnW) / 2;
-                const btnY = boxY + boxH - 90;
+                const btnY = boxY + boxH - 70;
                 endBtnRect = {x: btnX, y: btnY, w: btnW, h: btnH};
 
                 let gradBtn;
@@ -526,9 +526,7 @@ function restartGame() {
                     const secretText = "躲开冲动的拳头实在是太容易了。在防卫的同时，你还不断劝告着这个年轻人不应该乱丢垃圾。不知道过了多久，又或是哪句话触动了他，他终于愿意停下来听你说话...";
                     drawWrapText(secretText, boxX + 30, boxY + 70, boxW - 60, 26);
 
-                    ctx.font = '30px sans-serif';
-                    ctx.textAlign = "center";
-                  
+                    // 【已彻底删除本次得分绘制代码】
                 }else if(isWin){
                     // ===== 普通胜利结局（新增互殴图片+剧情文字） =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
@@ -561,8 +559,7 @@ function restartGame() {
                     const fightText = "你们打得难解难分，不相上下，拳头相撞的闷响成功吸引了一大片的路人...以及警察。";
                     drawWrapText(fightText, imgX + imgW + 20, imgY + 10, boxW - imgW - 60, 24);
 
-                    ctx.font = '24px sans-serif';
-                    ctx.textAlign = "center";
+                    // 【已彻底删除本次得分绘制代码】
                 }else{
                     // ===== 失败结局 =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
@@ -571,10 +568,11 @@ function restartGame() {
                     btnText = "重新挑战";
                     ctx.fillText('游戏失败', canvas.width/2, boxY + 30);
                     ctx.font = '24px sans-serif';
+                    // 失败提示保留，不含“本次得分”字样
                     ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, boxY + 120);
                 }
 
-                // 绘制画布按钮
+                // 绘制画布按钮，字号30，文字居中不偏下
                 ctx.fillStyle = gradBtn;
                 ctx.beginPath();
                 ctx.roundRect(btnX, btnY, btnW, btnH, 16);
