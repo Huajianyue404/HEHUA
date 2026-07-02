@@ -519,15 +519,14 @@ function restartGame() {
                     btnText = "继续";
                     ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, boxY + 20);
                     
-                    ctx.font = '22px sans-serif';
+                    ctx.font = '40px sans-serif';
                     ctx.textAlign = "left";
                     ctx.fillStyle = "#222";
                     const secretText = "躲开冲动的拳头实在是太容易了。在防卫的同时，你还不断劝告着这个年轻人不应该乱丢垃圾。不知道过了多久，又或是哪句话触动了他，他终于愿意停下来听你说话...";
                     drawWrapText(secretText, boxX + 30, boxY + 70, boxW - 60, 26);
 
-                    // 【已彻底删除本次得分绘制代码】
                 }else if(isWin){
-                    // ===== 普通胜利结局（新增互殴图片+剧情文字） =====
+                    // ===== 普通胜利结局 =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
                     gradBtn.addColorStop(0, "#34d399");
                     gradBtn.addColorStop(1, "#059669");
@@ -552,7 +551,7 @@ function restartGame() {
                     }
 
                     // 右侧剧情文字，自动换行
-                    ctx.font = '22px sans-serif';
+                    ctx.font = '40px sans-serif';
                     ctx.textAlign = "left";
                     ctx.fillStyle = "#222";
                     const fightText = "你们打得难解难分，不相上下，拳头相撞的闷响成功吸引了一大片的路人...以及警察。";
