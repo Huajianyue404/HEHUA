@@ -519,8 +519,7 @@ function restartGame() {
                     btnText = "继续";
                     ctx.fillText('隐藏结局 · 完美通关', canvas.width/2, boxY + 20);
                     
-                    // 新增圣光劝导剧情文字
-                    ctx.font = '18px sans-serif';
+                    ctx.font = '22px sans-serif';
                     ctx.textAlign = "left";
                     ctx.fillStyle = "#222";
                     const secretText = "躲开冲动的拳头实在是太容易了。在防卫的同时，你还不断劝告着这个年轻人不应该乱丢垃圾。不知道过了多久，又或是哪句话触动了他，他终于愿意停下来听你说话...";
@@ -553,13 +552,12 @@ function restartGame() {
                     }
 
                     // 右侧剧情文字，自动换行
-                    ctx.font = '17px sans-serif';
+                    ctx.font = '22px sans-serif';
                     ctx.textAlign = "left";
                     ctx.fillStyle = "#222";
                     const fightText = "你们打得难解难分，不相上下，拳头相撞的闷响成功吸引了一大片的路人...以及警察。";
                     drawWrapText(fightText, imgX + imgW + 20, imgY + 10, boxW - imgW - 60, 24);
 
-                    // 【已彻底删除本次得分绘制代码】
                 }else{
                     // ===== 失败结局 =====
                     gradBtn = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnH);
@@ -568,7 +566,6 @@ function restartGame() {
                     btnText = "重新挑战";
                     ctx.fillText('游戏失败', canvas.width/2, boxY + 30);
                     ctx.font = '24px sans-serif';
-                    // 失败提示保留，不含“本次得分”字样
                     ctx.fillText(`得分：${score}，血量耗尽`, canvas.width/2, boxY + 120);
                 }
 
